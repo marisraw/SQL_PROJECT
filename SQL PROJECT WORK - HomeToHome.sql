@@ -106,6 +106,7 @@ VALUES
 (5, "Suguna", "3654854887", "Madurai");
 -- END
 
+
 -- Inserting data in Payments table
 INSERT INTO Payments 
 VALUES
