@@ -111,10 +111,10 @@ VALUES
 INSERT INTO Payments 
 VALUES
 (1, "UPI", "Successfull", 2),
-(2, "UPI", "Successfull", 3),
+(2, "UPI", "Successfull", 2),
 (3, "Card", "Failure", 4),
-(4, "Card", "Failure", 2),
-(5, "UPI", "Successfull", 1);
+(4, "Card", "Failure", 3),
+(5, "UPI", "Successfull", 5);
 -- END
 
 
