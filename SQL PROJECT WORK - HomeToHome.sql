@@ -218,6 +218,36 @@ GROUP BY Customer_id;
 -- END
 
 
+-- 10 . Pending  status of items.
+SELECT orders.item, shippings.status
+FROM orders
+JOIN Shippings
+ON Orders.order_id = Shippings.order_id
+WHERE Shippings.status = 'Pending'
+GROUP BY Shippings.order_ID;
+-- END
+
+
+-- 11 . total amount of all pending orders 
+SELECT SUM(Orders.amount) AS Total_Pending_Amount
+FROM orders
+JOIN Shippings
+ON Orders.order_id = Shippings.order_id
+WHERE Shippings.status = 'Pending';
+
+
+-- 12 . Pending amount of each items
+SELECT orders.item, SUM(Orders.amount) AS Pending_Amount
+FROM orders
+JOIN Shippings
+ON Orders.order_id = Shippings.order_id
+WHERE Shippings.status = 'Pending'
+GROUP BY Shippings.order_ID;
+-- END
+
+
+
+
 -- Scenarios of this table:-
 -- 1 .  Who ordered what quantity?
 -- 2 .  Who order more than one time
@@ -228,6 +258,9 @@ GROUP BY Customer_id;
 -- 7. Get list of pending counts by customers 
 -- 8. Get list of deliverd counts by customers 
 -- 9. ///// UNCOVERED ///// Show the pending & deliverd counts by customers 
+-- 10 . Pending  status of items.
+-- 11 . total amount of all pending orders 
+-- 12 . Pending amount of each items
 
 
 
