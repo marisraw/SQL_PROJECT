@@ -18,6 +18,10 @@ Place VARCHAR(50) NOT NULL
 );
 -- END
 
+-- Select a Customers table
+Select * From Customers;
+-- END
+
 
 -- Creating a table for Merchants
 CREATE TABLE MERCHANTS
@@ -28,6 +32,10 @@ Mobile VARCHAR(50) NOT NULL,
 Place VARCHAR(50) NOT NULL
 );
 -- END
+
+-- Select a merchants table
+Select * From Merchants;
+-- END 
 
 
 -- Creating a table for orders
@@ -41,6 +49,10 @@ CONSTRAINT FK_Orders_Customer_ID FOREIGN KEY (Customer_ID) REFERENCES Customers 
 );
 -- END
 
+-- Select a orders table
+Select * From orders;
+-- END 
+
 
 -- Creating a table for Payments
 CREATE TABLE Payments
@@ -52,6 +64,10 @@ Order_ID INT,
 CONSTRAINT FK_Payments_Order_ID FOREIGN KEY (Order_ID) REFERENCES Orders (Order_ID)
 );
 -- END
+
+-- Select a payments table
+Select * From payments;
+-- END 
 
 
 -- Creating a table for Shippings
@@ -67,6 +83,10 @@ Order_ID INT,
 CONSTRAINT FK_Shippings_Order_ID FOREIGN KEY (Order_ID) REFERENCES Orders (Order_ID)
 );
 -- END
+
+-- Select a shippings table
+Select * From shippings;
+-- END 
 
 
 -- Show all the table where created
@@ -128,27 +148,86 @@ VALUES
 (5, "Pending", 2, 4, 3);
 -- END
 
+-- !!! QUERIES !!! --
 
--- Select and view all the tables
-Select*
-From Customers;
-
-Select*
-From Orders;
-
-Select*
-From Merchants;
-
-Select*
-From payments;
-
-Select*
-From Shippings;
--- END 
+-- 1 .  Who ordered what quantity?
+SELECT customer_id, COUNT(order_id) AS Order_Counts
+FROM orders
+GROUP BY orders.customer_id;
+-- END
 
 
+-- 2 .  Who order more than one time
+SELECT customer_id, COUNT(order_id) AS Order_Counts
+FROM orders
+GROUP BY orders.customer_id
+HAVING COUNT(orders.order_id) > 1;
+-- END
 
 
+-- 3 .  Who ordered two times
+SELECT customer_id, COUNT(order_id) AS Order_Counts
+FROM orders
+GROUP BY orders.customer_id
+HAVING COUNT(orders.order_id) = 2;
+-- END
+
+
+-- 4. 2nd Customer delivery status
+SELECT customer_id, (status) AS Delivery_status
+FROM shippings
+WHERE customer_id = 2; 
+-- END
+
+
+-- 5. How many orders in pending status
+SELECT COUNT(*) AS Pending_Orders
+FROM Shippings
+WHERE status = 'Pending';
+-- END
+
+
+-- 6. How many orders are succesfully delivered
+SELECT COUNT(*) AS Pending_Orders
+FROM Shippings
+WHERE status = 'Deliverd';
+-- END
+
+
+-- 7. Get list of pending counts by customers 
+SELECT Customer_id, COUNT(*) AS Pending_Counts
+FROM Shippings
+WHERE status = 'Pending'
+GROUP BY Customer_id;
+
+
+-- 8. Get list of deliverd counts by customers 
+SELECT Customer_id, COUNT(*) AS Deliverd_Counts
+FROM Shippings
+WHERE status = 'Deliverd'
+GROUP BY Customer_id;
+
+
+-- 9. ///// UNCOVERED ///// Show the pending & deliverd counts by customers 
+SELECT 
+    Customer_id, 
+    COUNT(CASE WHEN status = 'Pending' THEN 1 END) AS Pending_Orders, 
+    COUNT(CASE WHEN status = 'Deliverd' THEN 1 END) AS Delivered_Orders
+FROM Shippings
+GROUP BY Customer_id;
+-- END
+
+
+-- Scenarios of this table:-
+-- 1 .  Who ordered what quantity?
+-- 2 .  Who order more than one time
+-- 3 .  Who ordered two times
+-- 4. 2nd Customer delivery status
+-- 5. How many orders in pending status
+-- 6. How many orders are succesfully delivered
+-- 7. Get list of pending counts by customers 
+-- 8. Get list of deliverd counts by customers 
+-- 9. ///// UNCOVERED ///// Show the pending & deliverd counts by customers 
 
 
 
