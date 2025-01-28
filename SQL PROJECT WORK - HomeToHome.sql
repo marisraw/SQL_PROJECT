@@ -144,7 +144,7 @@ From payments;
 
 Select*
 From Shippings;
--- END --
+-- END 
 
 
 
