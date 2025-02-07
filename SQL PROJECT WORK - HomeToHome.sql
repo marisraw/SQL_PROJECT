@@ -2,6 +2,7 @@
 CREATE DATABASE ShopToShop;
 -- END
 
+
 -- Using a database of ShopToShop
 USE ShopTOShop;
 -- END
@@ -20,6 +21,7 @@ Place VARCHAR(50) NOT NULL
 );
 -- END
 
+
 -- Inserting data in Customers table
 INSERT INTO Customers 
 VALUES
@@ -35,6 +37,7 @@ VALUES
 Select * From Customers;
 -- END
 
+
 -- * * * * * * * * * * * * * * * * * * --
 
 
@@ -48,6 +51,7 @@ Place VARCHAR(50) NOT NULL
 );
 -- END
 
+
 -- Inserting data in Merchants table
 INSERT INTO Merchants 
 VALUES
@@ -58,9 +62,11 @@ VALUES
 (5, "Suguna", "3654854887", "Madurai");
 -- END
 
+
 -- Select a merchants table
 Select * From Merchants;
 -- END 
+
 
 -- * * * * * * * * * * * * * * * * * * --
 
@@ -77,6 +83,7 @@ ON DELETE SET NULL
 );
 -- END
 
+
 -- Inserting data in Orders table
 INSERT INTO Orders 
 VALUES
@@ -87,9 +94,11 @@ VALUES
 (5, "Tomatos", 900, 1);
 -- END
 
+
 -- Select a orders table
 Select * From orders;
 -- END 
+
 
 -- * * * * * * * * * * * * * * * * * * --
 
@@ -105,11 +114,14 @@ CONSTRAINT FK_Payments_Order_ID FOREIGN KEY (Order_ID) REFERENCES Orders (Order_
 ON DELETE SET NULL
 );
 
+
 -- Select a payments table
 Select * From payments;
 -- END 
 
+
 -- * * * * * * * * * * * * * * * * * * --
+
 
 -- Creating a table for Shippings
 CREATE TABLE Shippings
@@ -126,6 +138,7 @@ ON DELETE SET NULL
 );
 -- END
 
+
 -- -- Inserting data in Shippings table
 INSERT INTO Shippings 
 VALUES
@@ -141,7 +154,9 @@ VALUES
 Select * From shippings;
 -- END 
 
+
 -- * * * * * * * * * * * * * * * * * * --
+
 
 -- Show all the table where created
 SHOW TABLES;
@@ -150,10 +165,11 @@ SHOW TABLES;
 
 -- * * * * * * * * * * * * * * * * * * --
 
+
 -- !!! STORED PROCEDURES !!! --
 
--- 1 .  Show all customers ordered  quantity?
 
+-- 1 .  Show all customers ordered  quantity?
 create view Show_all_customers_ordered_quantity
 AS
 SELECT customer_id, COUNT(order_id) AS Order_Counts
@@ -161,13 +177,10 @@ FROM orders
 GROUP BY orders.customer_id;
 
 select * from Show_all_customers_ordered_quantity;
-
-
 -- END
 
 
 -- 2 .  Who ordered by  more than one time or any?
-
 Delimiter $$
 create procedure Who_Orderd_By_More_than (in input_Order_Count int)
 begin
@@ -179,12 +192,10 @@ end $$
 Delimiter ;
 
 call Who_Orderd_By_More_than (1);
-
 -- END
 
 
 -- 3 .  Who ordered How much times
-
 Delimiter $$
 create procedure Who_Orderd_How_Much_time (in input_Order_Count int)
 begin
@@ -196,7 +207,6 @@ end $$
 Delimiter ;
 
 call Who_Orderd_How_Much_time  (1);
-
 -- END
 
 
@@ -215,20 +225,17 @@ call Customer_order_delivery_status  (3);
 
 
 -- 5. How many orders are not deliverd
-
 create view Show_Count_of_orders_Not_deliverd
 AS
 SELECT COUNT(*) AS Pending_Orders
 FROM Shippings
 WHERE status = 'Pending';
 
-
 select * from Show_Count_of_orders_Not_deliverd;
 -- END
 
 
 -- 6. Get list of pending counts by customers 
-
 create view Order_Pending_Counts_BY_Customers
 AS
 SELECT Customer_id, COUNT(*) AS Pending_Counts
@@ -237,10 +244,10 @@ WHERE status = 'Pending'
 GROUP BY Customer_id;
 
 select * from  Order_Pending_Counts_BY_Customers;
+-- END
 
 
 -- 7. Get list of deliverd counts by customers 
-
 create view Deliverd_Counts_BY_Customers 
 AS
 SELECT Customer_id, COUNT(*) AS Deliverd_Counts
@@ -249,10 +256,10 @@ WHERE status = 'Deliverd'
 GROUP BY Customer_id;
 
 select * from  Deliverd_Counts_BY_Customers;
+-- END
 
 
 -- 8 . Which items are pending
-
 create view Which_items_are_pending
 AS
 SELECT orders.item, shippings.status
@@ -263,12 +270,10 @@ WHERE Shippings.status = 'Pending'
 GROUP BY Shippings.order_ID;
 
 select * from Which_items_are_pending;
-
 -- END
 
 
 -- 09 . total amount of all pending orders
-
 create view total_amount_of_all_pending_orders 
 AS
 SELECT SUM(Orders.amount) AS Total_Pending_Amount
@@ -278,10 +283,10 @@ ON Orders.order_id = Shippings.order_id
 WHERE Shippings.status = 'Pending';
 
 select * from total_amount_of_all_pending_orders;
+-- END
 
 
 -- 10 . Pending amount of each items
-
 create view Pending_amount_of_each_items
 AS
 SELECT orders.item, SUM(Orders.amount) AS Pending_Amount
@@ -299,6 +304,7 @@ select * from Pending_amount_of_each_items;
 
 
 -- Scenarios of this table:-
+
 
 -- 1 .  Show all customers ordered  quantity?
 select * from Show_all_customers_ordered_quantity;
@@ -329,5 +335,3 @@ select * from total_amount_of_all_pending_orders;
 
 -- 10 . Pending amount of each items
 select * from Pending_amount_of_each_items;
-
-new
