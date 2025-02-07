@@ -15,7 +15,7 @@ USE ShopTOShop;
 CREATE TABLE Customers
 (
 Customer_ID INT PRIMARY KEY,
-Name VARCHAR(50) NOT NULL,
+Name VARCHAR(50) NOT pending_amount_of_each_itemsshow_all_customers_ordered_quantitytotal_amount_of_all_pending_ordersTotal_Pending_AmountNULL,
 Mobile VARCHAR(50) NOT NULL,
 Place VARCHAR(50) NOT NULL
 );
@@ -371,16 +371,37 @@ select * from Pending_amount_of_each_items;
 
 
 -- Scenarios of this table:-
--- 1 .  Who ordered what quantity?
--- 2 .  Who order more than one time
--- 3 .  Who ordered two times
--- 4. 2nd Customer order delivery status
+
+-- 1 .  Show all customers ordered  quantity?
+select * from Show_all_customers_ordered_quantity;
+
+-- 2 .  Who ordered by  more than one time or any?
+call Who_Orderd_By_More_than (1);
+
+-- 3 .  Who ordered How much times
+call Who_Orderd_How_Much_time  (1);
+
+-- 4. Check any Customer's order delivery status
+call Customer_order_delivery_status  (3);
+
 -- 5. How many orders are not deliverd
+select * from Show_Count_of_orders_Not_deliverd;
+
 -- 6. Get list of pending counts by customers 
+select * from  Order_Pending_Counts_BY_Customers;
+
 -- 7. Get list of deliverd counts by customers 
+select * from  Deliverd_Counts_BY_Customers;
+
 -- 8 . Which items are pending
--- 09 . total amount of all pending orders 
+select * from Which_items_are_pending;
+
+-- 09 . total amount of all pending orders
+select * from total_amount_of_all_pending_orders;
+
 -- 10 . Pending amount of each items
+select * from Pending_amount_of_each_items;
+
 
 
 
