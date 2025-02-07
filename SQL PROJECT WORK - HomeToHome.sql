@@ -15,7 +15,7 @@ USE ShopTOShop;
 CREATE TABLE Customers
 (
 Customer_ID INT PRIMARY KEY,
-Name VARCHAR(50) NOT pending_amount_of_each_itemsshow_all_customers_ordered_quantitytotal_amount_of_all_pending_ordersTotal_Pending_AmountNULL,
+Name VARCHAR(50) NOT NULL,
 Mobile VARCHAR(50) NOT NULL,
 Place VARCHAR(50) NOT NULL
 );
