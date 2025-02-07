@@ -2,7 +2,6 @@
 CREATE DATABASE ShopToShop;
 -- END
 
-
 -- Using a database of ShopToShop
 USE ShopTOShop;
 -- END
@@ -20,7 +19,6 @@ Mobile VARCHAR(50) NOT NULL,
 Place VARCHAR(50) NOT NULL
 );
 -- END
-
 
 -- Inserting data in Customers table
 INSERT INTO Customers 
@@ -50,7 +48,6 @@ Place VARCHAR(50) NOT NULL
 );
 -- END
 
-
 -- Inserting data in Merchants table
 INSERT INTO Merchants 
 VALUES
@@ -61,11 +58,9 @@ VALUES
 (5, "Suguna", "3654854887", "Madurai");
 -- END
 
-
 -- Select a merchants table
 Select * From Merchants;
 -- END 
-
 
 -- * * * * * * * * * * * * * * * * * * --
 
@@ -78,9 +73,9 @@ Item VARCHAR(50) NOT NULL,
 Amount INT NOT NULL,
 Customer_ID INT,
 CONSTRAINT FK_Orders_Customer_ID FOREIGN KEY (Customer_ID) REFERENCES Customers (Customer_ID)
+ON DELETE SET NULL
 );
 -- END
-
 
 -- Inserting data in Orders table
 INSERT INTO Orders 
@@ -92,21 +87,9 @@ VALUES
 (5, "Tomatos", 900, 1);
 -- END
 
-
--- Add "ON DELETE SET NULL" PROCESS FOR Orders Table
-ALTER TABLE Orders
-DROP CONSTRAINT FK_Orders_Customer_ID;
-
-ALTER TABLE Orders
-ADD CONSTRAINT FK_Orders_Customer_ID FOREIGN KEY (Customer_ID) REFERENCES Customers (Customer_ID)
-ON DELETE SET NULL;
--- END
-
-
 -- Select a orders table
 Select * From orders;
 -- END 
-
 
 -- * * * * * * * * * * * * * * * * * * --
 
@@ -119,38 +102,14 @@ Payment_Mode VARCHAR(50) NOT NULL,
 Status VARCHAR(50) NOT NULL,
 Order_ID INT,
 CONSTRAINT FK_Payments_Order_ID FOREIGN KEY (Order_ID) REFERENCES Orders (Order_ID)
+ON DELETE SET NULL
 );
--- END
-
-
--- Inserting data in Payments table
-INSERT INTO Payments 
-VALUES
-(1, "UPI", "Successfull", 2),
-(2, "UPI", "Successfull", 2),
-(3, "Card", "Failure", 4),
-(4, "Card", "Failure", 3),
-(5, "UPI", "Successfull", 5);
--- END
-
-
--- Add "ON DELETE SET NULL" PROCESS FOR Payments Table
-ALTER TABLE Orders
-DROP CONSTRAINT FK_Payments_Order_ID;
-
-ALTER TABLE Payments
-ADD CONSTRAINT FK_Payments_Order_ID FOREIGN KEY (Order_ID) REFERENCES Orders (Order_ID)
-ON DELETE SET NULL;
--- END
-
 
 -- Select a payments table
 Select * From payments;
 -- END 
 
-
 -- * * * * * * * * * * * * * * * * * * --
-
 
 -- Creating a table for Shippings
 CREATE TABLE Shippings
@@ -163,9 +122,9 @@ Merch_ID INT,
 CONSTRAINT FK_Shippings_Merch_ID FOREIGN KEY (Merch_ID) REFERENCES Merchants (Merch_ID),
 Order_ID INT,
 CONSTRAINT FK_Shippings_Order_ID FOREIGN KEY (Order_ID) REFERENCES Orders (Order_ID)
+ON DELETE SET NULL
 );
 -- END
-
 
 -- -- Inserting data in Shippings table
 INSERT INTO Shippings 
@@ -178,39 +137,11 @@ VALUES
 -- END
 
 
--- Add "ON DELETE SET NULL" PROCESS FOR Shippings Table
-ALTER TABLE Shippings
-DROP CONSTRAINT FK_Shippings_Customer_ID;
-
-ALTER TABLE Shippings
-DROP CONSTRAINT FK_Shippings_Merch_ID;
-
-ALTER TABLE Shippings
-DROP CONSTRAINT FK_Shippings_Order_ID;
-
-ALTER TABLE Shippings
-ADD CONSTRAINT FK_Shippings_Customer_ID FOREIGN KEY (Customer_ID)
-REFERENCES Customers (Customer_ID)
-ON DELETE SET NULL;
-
-ALTER TABLE Shippings
-ADD CONSTRAINT FK_Shippings_Merch_ID FOREIGN KEY (Merch_ID)
-REFERENCES Merchants (Merch_ID)
-ON DELETE SET NULL;
-
-ALTER TABLE Shippings
-ADD CONSTRAINT FK_Shippings_Order_ID FOREIGN KEY (Order_ID)
-REFERENCES Orders (Order_ID)
-ON DELETE SET NULL;
--- END
-
-
 -- Select a shippings table
 Select * From shippings;
 -- END 
 
 -- * * * * * * * * * * * * * * * * * * --
-
 
 -- Show all the table where created
 SHOW TABLES;
@@ -218,7 +149,6 @@ SHOW TABLES;
 
 
 -- * * * * * * * * * * * * * * * * * * --
-
 
 -- !!! STORED PROCEDURES !!! --
 
@@ -231,8 +161,6 @@ FROM orders
 GROUP BY orders.customer_id;
 
 select * from Show_all_customers_ordered_quantity;
-
-
 
 
 -- END
@@ -402,8 +330,4 @@ select * from total_amount_of_all_pending_orders;
 -- 10 . Pending amount of each items
 select * from Pending_amount_of_each_items;
 
-
-
-
-
-
+new
